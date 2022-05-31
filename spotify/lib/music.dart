@@ -13,12 +13,4 @@ class Music {
     required this.imagePath,
     required this.urlSong,
   });
-
-  //create a method to play the music
-  void play() {
-    //read the music from the asset file
-    final audioPlayer = AudioPlayer();
-    audioPlayer.setUrl(urlSong);
-    audioPlayer.play();
-  }
 }
