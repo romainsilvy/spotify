@@ -44,7 +44,7 @@ class _MusicPageState extends State<MusicPage> {
               myMusicList[widget.index].title,
             ),
             const Spacer(),
-            NavigationButtons(),
+            NavigationButtons(pageManager: _pageManager),
             ValueListenableBuilder<ProgressBarState>(
               valueListenable: _pageManager.progressNotifier,
               builder: (_, value, __) {
@@ -64,26 +64,14 @@ class _MusicPageState extends State<MusicPage> {
 }
 
 class NavigationButtons extends StatefulWidget {
-  const NavigationButtons({Key? key}) : super(key: key);
-
+  const NavigationButtons({Key? key, required this.pageManager})
+      : super(key: key);
+  final PageManager pageManager;
   @override
   State<NavigationButtons> createState() => _NavigationButtonsState();
 }
 
 class _NavigationButtonsState extends State<NavigationButtons> {
-  late final PageManager _pageManager;
-  @override
-  void initState() {
-    super.initState();
-    _pageManager = PageManager(myMusicList[0].urlSong);
-  }
-
-  @override
-  void dispose() {
-    _pageManager.dispose();
-    super.dispose();
-  }
-
   Widget build(BuildContext context) {
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -95,7 +83,7 @@ class _NavigationButtonsState extends State<NavigationButtons> {
             onPressed: () {},
           ),
           ValueListenableBuilder<ButtonState>(
-            valueListenable: _pageManager.buttonNotifier,
+            valueListenable: widget.pageManager.buttonNotifier,
             builder: (_, value, __) {
               switch (value) {
                 case ButtonState.loading:
@@ -109,13 +97,13 @@ class _NavigationButtonsState extends State<NavigationButtons> {
                   return IconButton(
                     icon: const Icon(Icons.play_arrow),
                     iconSize: 50,
-                    onPressed: _pageManager.play,
+                    onPressed: widget.pageManager.play,
                   );
                 case ButtonState.playing:
                   return IconButton(
                     icon: const Icon(Icons.pause),
                     iconSize: 50,
-                    onPressed: _pageManager.pause,
+                    onPressed: widget.pageManager.pause,
                   );
               }
             },
