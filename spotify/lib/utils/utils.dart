@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:spotify/music.dart';
 
 final List<Music> myMusicList = [
@@ -20,3 +21,5 @@ final List<Music> myMusicList = [
     urlSong: 'assets/music/tout-va-bien.mp3',
   ),
 ];
+
+SizedBox spacer(double height) => SizedBox(height: height);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotify/main.dart';
 import 'package:spotify/page_manager.dart';
 import 'package:spotify/utils/utils.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
@@ -32,19 +33,40 @@ class _MusicPageState extends State<MusicPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyHomePage(title: 'Spotify'),
+            ),
+          );
+        }),
         title: Text(myMusicList[widget.index].title +
             ' - ' +
             myMusicList[widget.index].singer),
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            spacer(20),
+            Image(
+              width: 80 * MediaQuery.of(context).size.width / 100,
+              fit: BoxFit.cover,
+              image: AssetImage(myMusicList[widget.index].imagePath),
+            ),
+            spacer(50),
             Text(
               myMusicList[widget.index].title,
+              style: TextStyle(fontSize: 30),
+            ),
+            spacer(10),
+            Text(
+              myMusicList[widget.index].singer,
             ),
             const Spacer(),
-            NavigationButtons(pageManager: _pageManager),
+            NavigationButtons(pageManager: _pageManager, index: widget.index),
+            Spacer(),
             ValueListenableBuilder<ProgressBarState>(
               valueListenable: _pageManager.progressNotifier,
               builder: (_, value, __) {
@@ -56,6 +78,7 @@ class _MusicPageState extends State<MusicPage> {
                 );
               },
             ),
+            spacer(20),
           ],
         ),
       ),
@@ -64,9 +87,11 @@ class _MusicPageState extends State<MusicPage> {
 }
 
 class NavigationButtons extends StatefulWidget {
-  const NavigationButtons({Key? key, required this.pageManager})
+  const NavigationButtons(
+      {Key? key, required this.pageManager, required this.index})
       : super(key: key);
   final PageManager pageManager;
+  final int index;
   @override
   State<NavigationButtons> createState() => _NavigationButtonsState();
 }
@@ -80,7 +105,25 @@ class _NavigationButtonsState extends State<NavigationButtons> {
           IconButton(
             iconSize: 50,
             icon: Icon(Icons.skip_previous),
-            onPressed: () {},
+            onPressed: () {
+              widget.pageManager.pause();
+              if (widget.index == 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        MusicPage(index: myMusicList.length - 1),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MusicPage(index: widget.index - 1),
+                  ),
+                );
+              }
+            },
           ),
           ValueListenableBuilder<ButtonState>(
             valueListenable: widget.pageManager.buttonNotifier,
@@ -113,7 +156,22 @@ class _NavigationButtonsState extends State<NavigationButtons> {
             iconSize: 50,
             icon: Icon(Icons.skip_next),
             onPressed: () {
-              //widget.index += 1;
+              widget.pageManager.pause();
+              if (widget.index == myMusicList.length - 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MusicPage(index: 0),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MusicPage(index: widget.index + 1),
+                  ),
+                );
+              }
             },
           ),
         ]);

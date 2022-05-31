@@ -36,18 +36,22 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(widget.title),
       ),
 
       body: Column(
         children: <Widget>[
-          Expanded(
-            //add an image here
-            child: Container(
-              child: Image.asset('assets/images/cover.jpg'),
+          spacer(20),
+          Container(
+            child: Image(
+              width: 80 * MediaQuery.of(context).size.width / 100,
+              fit: BoxFit.cover,
+              image: AssetImage(myMusicList[0].imagePath),
             ),
           ),
+          spacer(40),
           Expanded(
             child: ListView.builder(
               itemCount: myMusicList.length,
