@@ -3,6 +3,7 @@ import 'package:spotify/main.dart';
 import 'package:spotify/page_manager.dart';
 import 'package:spotify/utils/utils.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+import 'package:page_transition/page_transition.dart';
 
 class MusicPage extends StatefulWidget {
   const MusicPage({Key? key, required this.index}) : super(key: key);
@@ -109,19 +110,16 @@ class _NavigationButtonsState extends State<NavigationButtons> {
               widget.pageManager.pause();
               if (widget.index == 0) {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        MusicPage(index: myMusicList.length - 1),
-                  ),
-                );
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.leftToRight,
+                        child: MusicPage(index: myMusicList.length - 1)));
               } else {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MusicPage(index: widget.index - 1),
-                  ),
-                );
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.leftToRight,
+                        child: MusicPage(index: widget.index - 1)));
               }
             },
           ),
@@ -159,18 +157,16 @@ class _NavigationButtonsState extends State<NavigationButtons> {
               widget.pageManager.pause();
               if (widget.index == myMusicList.length - 1) {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MusicPage(index: 0),
-                  ),
-                );
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: MusicPage(index: 0)));
               } else {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MusicPage(index: widget.index + 1),
-                  ),
-                );
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: MusicPage(index: widget.index + 1)));
               }
             },
           ),
