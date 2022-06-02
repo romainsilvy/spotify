@@ -59,10 +59,17 @@ class _MusicPageState extends State<MusicPage> {
             spacer(50),
             Text(
               myMusicList[widget.index].title,
-              style: TextStyle(fontSize: 30),
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.white,
+              ),
             ),
             spacer(10),
             Text(
+              style: TextStyle(
+                color: Color.fromARGB(255, 149, 144, 144),
+                fontSize: 20,
+              ),
               myMusicList[widget.index].singer,
             ),
             const Spacer(),
@@ -104,6 +111,7 @@ class _NavigationButtonsState extends State<NavigationButtons> {
         children: <Widget>[
           //previous button
           IconButton(
+            color: Colors.white,
             iconSize: 50,
             icon: Icon(Icons.skip_previous),
             onPressed: () {
@@ -136,12 +144,14 @@ class _NavigationButtonsState extends State<NavigationButtons> {
                   );
                 case ButtonState.paused:
                   return IconButton(
+                    color: Colors.white,
                     icon: const Icon(Icons.play_arrow),
                     iconSize: 50,
                     onPressed: widget.pageManager.play,
                   );
                 case ButtonState.playing:
                   return IconButton(
+                    color: Colors.white,
                     icon: const Icon(Icons.pause),
                     iconSize: 50,
                     onPressed: widget.pageManager.pause,
@@ -151,6 +161,7 @@ class _NavigationButtonsState extends State<NavigationButtons> {
           ),
           //next button
           IconButton(
+            color: Colors.white,
             iconSize: 50,
             icon: Icon(Icons.skip_next),
             onPressed: () {

@@ -15,8 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Spotify',
       theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          primarySwatch: Colors.green,
+          scaffoldBackgroundColor: Color.fromARGB(255, 33, 31, 31)),
       home: const MyHomePage(title: 'Spotify'),
     );
   }
@@ -57,8 +58,16 @@ class _MyHomePageState extends State<MyHomePage> {
               itemCount: myMusicList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(myMusicList[index].title),
-                  subtitle: Text(myMusicList[index].singer),
+                  title: Text(
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      myMusicList[index].title),
+                  subtitle: Text(
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 149, 144, 144),
+                      ),
+                      myMusicList[index].singer),
                   leading: Image.asset(myMusicList[index].imagePath),
                   onTap: () {
                     Navigator.push(
